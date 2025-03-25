@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -100,7 +100,7 @@ const axiosInstance = axios.create({
 
   const updateTask = async (taskId, updatedData) => {
     try {
-      const res = await axiosInstance.put("/tasks/${taskId}", updatedData);
+      const res = await axiosInstance.put(`/tasks/${taskId}`, updatedData);
       setTasks(prev =>
         prev.map(task => (task._id === taskId ? res.data.updatetask : task))
       );      
@@ -113,7 +113,7 @@ const axiosInstance = axios.create({
 
   const deleteTask = async (taskId) => {
     try {
-      await axiosInstance.delete("/tasks/${taskId}");
+      await axiosInstance.delete(`/tasks/${taskId}`);
       setTasks(prev => prev.filter(task => task._id !== taskId));
       toast.success('Task deleted!');
     } catch (error) {
