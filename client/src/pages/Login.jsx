@@ -58,7 +58,7 @@ const Login = () => {
       </form>
 
       <p className="mt-4 text-sm text-gray-600 text-center">
-        Demo credentials: sidd@email.com / 123456
+        Demo credentials: rrr@email.com / 123456
       </p>
     </div>
   );
