@@ -29,7 +29,11 @@ app.get('/',(req,res)=>{
 app.use('/api/auth',Userrouter)
 app.use('/api',taskrouter)
 
-app.listen(PORT,()=>{
-    dbconnect()
-    console.log(`Server is running on port ${PORT}`)
-})
+export default app; //For Vercel Deployment
+
+
+//For Local Version -- >>>
+// app.listen(PORT,()=>{
+//     dbconnect()
+//     console.log(`Server is running on port ${PORT}`)
+// })
