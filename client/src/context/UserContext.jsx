@@ -11,7 +11,7 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const API = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL, 
+    baseURL: import.meta.env.MODE === 'development' ? 'http://localhost:5000/api':"/api", 
     withCredentials: true,
   });
 
@@ -19,7 +19,7 @@ export const UserProvider = ({ children }) => {
 
   const signup = async (name, email, password) => {
     try {
-      const res = await axios.post(`${API}/api/auth/signup`, {
+      const res = await axios.post(`${API}/auth/signup`, {
         name,
         email,
         password,
@@ -34,7 +34,7 @@ export const UserProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const res = await axios.post(`${API}/api/auth/login`, {
+      const res = await axios.post(`${API}/auth/login`, {
         email,
         password,
       });
@@ -48,7 +48,7 @@ export const UserProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.get(`${API}/api/auth/logout`);
+      await axios.get(`${API}/auth/logout`);
       setUser(null);
       setTasks([]);
       toast.success('Logged out successfully');
@@ -59,7 +59,7 @@ export const UserProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const res = await axios.get(`${API}/api/auth`);
+      const res = await axios.get(`${API}/auth`);
       if(res?.data){
         setUser(res.data.user);
       } else {
@@ -76,7 +76,7 @@ export const UserProvider = ({ children }) => {
 
   const getAllTasks = async () => {
     try {
-      const res = await axios.get(`${API}/api/tasks`);
+      const res = await axios.get(`${API}/tasks`);
       setTasks(res.data.user.tasks);
     } catch (error) {
       console.log(error.response?.data?.message || 'Error fetching tasks');
@@ -85,7 +85,7 @@ export const UserProvider = ({ children }) => {
 
   const createTask = async (title, description) => {
     try {
-      const res = await axios.post(`${API}/api/tasks`, {
+      const res = await axios.post(`${API}/tasks`, {
         title,
         description,
       });
@@ -98,7 +98,7 @@ export const UserProvider = ({ children }) => {
 
   const updateTask = async (taskId, updatedData) => {
     try {
-      const res = await axios.put(`${API}/api/tasks/${taskId}`, updatedData);
+      const res = await axios.put(`${API}/tasks/${taskId}`, updatedData);
       setTasks(prev =>
         prev.map(task => (task._id === taskId ? res.data.updatetask : task))
       );      
@@ -111,7 +111,7 @@ export const UserProvider = ({ children }) => {
 
   const deleteTask = async (taskId) => {
     try {
-      await axios.delete(`${API}/api/tasks/${taskId}`);
+      await axios.delete(`${API}/tasks/${taskId}`);
       setTasks(prev => prev.filter(task => task._id !== taskId));
       toast.success('Task deleted!');
     } catch (error) {
