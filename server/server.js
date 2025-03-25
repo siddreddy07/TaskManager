@@ -17,8 +17,8 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use(cors({
-    origin: 'http://localhost:5173',  // ✅ Your frontend URL here
-    credentials: true                 // ✅ This allows cookies to be sent/received
+    origin : process.env.FRONTEND_URL || "http://localhost:5173",
+    credentials: true  
   }));
 
 
